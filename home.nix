@@ -14,7 +14,6 @@
     pkgs.htop
     pkgs.ripgrep
     pkgs.tig
-    pkgs.tmux
     pkgs.vim
   ];
 
@@ -77,5 +76,35 @@
       battery.disabled = true;
     };
   };
+
+  programs.tmux = {
+    enable = true;
+
+    sensibleOnTop = false;
+
+    # ported from my .tmux.conf:
+    extraConfig = ''
+      bind -n M-h select-pane -L
+      bind -n M-l select-pane -R
+      bind -n M-k select-pane -U
+      bind -n M-j select-pane -D
+
+      # I believe these are rerouted from PageUp/PageDown via Karabiner
+      bind -n M-1 previous-window
+      bind -n M-2 next-window
+      #bind -n C-PageUp previous-window
+      #bind -n C-PageDown next-window
+
+      set-option -g allow-rename off
       
+      # tmux starts a login shell by default; this overrides that
+      set-option -g default-command "$SHELL"
+
+      set -sg escape-time 0 # No delay after pressing escape in VIM
+    '';
+
+    terminal = "screen-256color"; # set -g default-terminal "screen-256color"
+
+    escapeTime = 0;
+  };
 }
