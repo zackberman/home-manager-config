@@ -13,7 +13,6 @@
     pkgs.git
     pkgs.htop
     pkgs.ripgrep
-    pkgs.starship
     pkgs.tig
     pkgs.tmux
     pkgs.vim
@@ -72,6 +71,11 @@
       fileWidgetCommand = defaultCommand;
     };
 
-  programs.starship.enable = true;
+  programs.starship = {
+    enable = true;
+    settings = {
+      battery.disabled = true;
+    };
+  };
       
 }
