@@ -4,7 +4,12 @@
 
 - `nix flake update`: In the Home Manager manual's words, "The flake inputs are
   not automatically updated by Home Manager. You need to use the standard
-  `nix flake update` command for that.
+  `nix flake update` command for that."
+
+- `nix flake lock`: ... Or maybe this is the command? According to
+  [this blog post](https://www.bekk.christmas/post/2021/16/dotfiles-with-nix-and-home-manager):
+  "You can update all your programs by navigating to your dotfiles folder and
+  running `nix flake lock`, which updates the `flake.lock` file."
 
 - `home-manager switch --flake .`: This installs files/applications/symlinks
   where they belong. Clone this repo and run it from inside.
