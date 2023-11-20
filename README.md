@@ -1,6 +1,6 @@
 # My Home Manager configuration
 
-### Commands I might want to run
+### Commands I might want to run/good resources
 
 - `nix flake update`: In the Home Manager manual's words, "The flake inputs are
   not automatically updated by Home Manager. You need to use the standard
@@ -8,6 +8,17 @@
 
 - `home-manager switch --flake .`: This installs files/applications/symlinks
   where they belong. Clone this repo and run it from inside.
+
+- Configuration options for every module:
+  https://nix-community.github.io/home-manager/options.html
+
+### TODO
+
+- Migrate .vimrc. See documention for
+  [programs.vim.plugins](https://nix-community.github.io/home-manager/options.html#opt-programs.vim.plugins).
+  It looks like not all of my plugins are in nixpkgs. But it looks like maybe it
+  wouldn't be that hard to package them myself? See the `buildVimPluginFrom2Nix`
+  pattern in [vim/plugins/generated.nix](https://github.com/NixOS/nixpkgs/blob/nixos-23.05/pkgs/applications/editors/vim/plugins/generated.nix).
 
 ### History
 
@@ -35,3 +46,4 @@ Home Manager can't actually set my shell at the OS level. To do that, after
 running `home-manager switch --flake .`, I ran
 `realpath ~/.nix-profile/bin/bash` and then appended the result to /etc/shells
 (manually, in vim) and changed my shell using `chsh`.
+
