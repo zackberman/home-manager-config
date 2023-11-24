@@ -11,8 +11,9 @@
   "You can update all your programs by navigating to your dotfiles folder and
   running `nix flake lock`, which updates the `flake.lock` file."
 
-- `home-manager switch --flake .`: This installs files/applications/symlinks
-  where they belong. Clone this repo and run it from inside.
+- `home-manager switch --flake .#<profile>` (where profile is either `macos` or
+  `wsl`): This installs files/applications/symlinks where they belong. Clone
+  this repo and run it from inside.
 
 - Configuration options for every module:
   https://nix-community.github.io/home-manager/options.html
@@ -26,6 +27,8 @@
   pattern in [vim/plugins/generated.nix](https://github.com/NixOS/nixpkgs/blob/nixos-23.05/pkgs/applications/editors/vim/plugins/generated.nix).
 
 ### History
+
+#### First steps on macOS
 
 I ran the nix-darwin uninstaller. Then, I uninstalled Nix by following these
 instructions: https://nixos.org/manual/nix/stable/installation/uninstall#macos.
@@ -52,3 +55,19 @@ running `home-manager switch --flake .`, I ran
 `realpath ~/.nix-profile/bin/bash` and then appended the result to /etc/shells
 (manually, in vim) and changed my shell using `chsh`.
 
+#### Allowing for multiple configuration profiles
+
+I tried to replicate my installation of both nix and home-manager in WSL on my
+Dell XPS. This mostly worked, except that the nix installation failed to create
+my per-user nix profile directory, which prohibited me from installing anything
+(i.e. home-manager). After searching around online, I managed to work around
+this like so:
+
+  ```bash
+  sudo mkdir -m 0755 -p /nix/var/nix/profiles/per-user/zberman
+  sudo chown -R zberman:nixbld /nix/var/nix/profiles/per-user/zberman/
+  ```
+
+Then I replicated some of what I observed in
+[this dotfiles repo](https://github.com/ereslibre/dotfiles/) to support multiple
+configuration profiles ("macos" and "wsl").
