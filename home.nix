@@ -1,8 +1,15 @@
-{ config, pkgs, ... }:
+{ config,
+  pkgs,
+  system,
+  username,
+  homeDirectory,
+  stateVersion,
+  ...
+}:
 
 {
-  home.username = "zberman";
-  home.homeDirectory = "/Users/zberman";
+  home.username      = username;
+  home.homeDirectory = homeDirectory;
 
   home.packages = [
     pkgs.bat
@@ -25,14 +32,17 @@
   # You can update Home Manager without changing this value. See
   # the Home Manager release notes for a list of state version
   # changes in each release.
-  home.stateVersion = "23.05";
+  home.stateVersion = stateVersion;
+
+  # Let Home Manager install and manage itself.
+  programs.home-manager.enable = true;
+}
+
+// (pkgs.lib.attrsets.optionalAttrs pkgs.stdenv.isDarwin {
 
   # This is to ensure programs are using ~/.config rather than
   # /Users/<username>/Library/whatever
   xdg.enable = true;
-
-  # Let Home Manager install and manage itself.
-  programs.home-manager.enable = true;
 
   programs.bash = {
     enable = true;
@@ -107,4 +117,4 @@
 
     escapeTime = 0;
   };
-}
+})
