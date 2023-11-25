@@ -23,7 +23,9 @@
                 system
                 username
                 homeDirectory
-                stateVersion; };
+                stateVersion
+                isWSL;
+            };
           in
             home-manager.lib.homeManagerConfiguration {
               inherit pkgs;
@@ -43,12 +45,14 @@
           username       = "zberman";
           homeDirectory  = "/Users/zberman";
           stateVersion   = "23.05";
+          isWSL          = false;
         };
         wsl = {
           system         = "x86_64-linux";
           username       = "zberman";
           homeDirectory  = "/home/zberman";
           stateVersion   = "23.05";
+          isWSL          = true;
         };
       };
 
