@@ -10,18 +10,25 @@
       url = "github:nix-community/home-manager/release-23.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    nytxw-stats = {
+      url = "git+ssh://git@github.com/zackberman/nytxw-stats";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { nixpkgs, home-manager, ... }:
+  outputs = { nixpkgs, home-manager, nytxw-stats, ... }@inputs:
     let
       configurationFromProfile =
         pname: profile:
           let
-            pkgs = nixpkgs.legacyPackages.${profile.system};
+            pkgs        = nixpkgs.legacyPackages.${profile.system};
+            nytxw-stats = inputs.nytxw-stats.packages.${profile.system};
 
             extraSpecialArgs = {
               inherit pkgs;
               inherit nixpkgs;
+              inherit nytxw-stats;
               inherit (profile)
                 system
                 username

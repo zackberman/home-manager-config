@@ -1,6 +1,7 @@
 {
   config,
   pkgs,
+  nytxw-stats,
   ...
 }:
 
@@ -29,5 +30,6 @@ in
       pkgs.tig
       pkgs.vim
       python
+      nytxw-stats.default
     ];
   }
