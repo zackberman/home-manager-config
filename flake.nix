@@ -21,6 +21,7 @@
 
             extraSpecialArgs = {
               inherit pkgs;
+              inherit nixpkgs;
               inherit (profile)
                 system
                 username
