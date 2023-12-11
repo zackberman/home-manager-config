@@ -71,3 +71,13 @@ this like so:
 Then I replicated some of what I observed in
 [this dotfiles repo](https://github.com/ereslibre/dotfiles/) to support multiple
 configuration profiles ("macos" and "wsl").
+
+#### Configuring ssh and github so I can use private flake inputs
+
+I installed [Secretive](https://github.com/maxgoedjen/secretive) for macOS on my
+Mac Studio by downloading the release directly from the release page and moving
+the application to my Applications folder. The application instructs you to
+export `SSH_AUTH_SOCK` in bash and add a couple of lines to `~/.ssh/config`,
+both of which I achieved through Home Manager. I used Secretive to generate a
+new private key, and I added the public key to my github account through the
+browser.
