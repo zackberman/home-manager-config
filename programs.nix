@@ -1,6 +1,7 @@
 {
   config,
   pkgs,
+  homeDirectory,
   isWSL,
   ...
 }:
@@ -24,9 +25,15 @@
       # don't put duplicate lines or lines starting with space in the history
       historyControl = [ "ignoredups" "ignorespace" ];
 
-      sessionVariables = {
-        DISPLAY = ":0";
-      };
+      sessionVariables =
+        let
+          display = { DISPLAY = ":0"; };
+          ssh_auth_sock =
+            pkgs.lib.optionalAttrs
+              pkgs.stdenv.isDarwin
+              { SSH_AUTH_SOCK = homeDirectory + "/Library/Containers/com.maxgoedjen.Secretive.SecretAgent/Data/socket.ssh"; };
+        in
+          display // ssh_auth_sock;
     };
 
     fzf = 
@@ -43,6 +50,18 @@
         # export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
         fileWidgetCommand = defaultCommand;
       };
+
+    ssh =
+      if pkgs.stdenv.isDarwin then
+        {
+          enable = true;
+          matchBlocks.any-host = {
+            host = "*";
+            extraOptions.IdentityAgent =
+              homeDirectory + "/Library/Containers/com.maxgoedjen.Secretive.SecretAgent/Data/socket.ssh";
+          };
+        }
+      else {};
 
     starship = {
       enable = true;
