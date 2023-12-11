@@ -12,6 +12,7 @@
   imports = [
     ./packages.nix
     ./programs.nix
+    ./registry.nix
   ];
 
   home.username      = username;
