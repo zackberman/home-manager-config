@@ -13,6 +13,7 @@
     pkgs.fzf
     pkgs.git
     pkgs.htop
+    pkgs.openssh
     pkgs.ripgrep
     pkgs.tig
     pkgs.vim
