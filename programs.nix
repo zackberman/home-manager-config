@@ -3,38 +3,56 @@
   pkgs,
   homeDirectory,
   isWSL,
+  agent-bridge,
   ...
 }:
 
 {
   programs = {
 
-    bash = {
-      enable = true;
-      initExtra = ''
-        function ll() { eza -algF --group-directories-first "$@"; }
+    bash =
+      let
+        agent-bridge =
+          pkgs.writeShellApplication {
+            name          = "agent-bridge";
+            text          = builtins.readFile ./agent-bridge.sh;
+            runtimeInputs = [
+              pkgs.socat
+              pkgs.toybox # for pgrep and setsid
+            ];
+          };
 
-        #source "$(fzf-share)/key-bindings.bash"
-        #source "$(fzf-share)/completion.bash"
-      '';
+      in {
+        enable = true;
+        initExtra = ''
+          function ll() { eza -algF --group-directories-first "$@"; }
 
-      shellAliases = {
-        dirs = "dirs -v";
+          #source "$(fzf-share)/key-bindings.bash"
+          #source "$(fzf-share)/completion.bash"
+
+        '' + (pkgs.lib.optionalString isWSL ''
+          "${agent-bridge}/bin/agent-bridge"
+        '');
+
+        shellAliases = {
+          dirs = "dirs -v";
+        };
+
+        # don't put duplicate lines or lines starting with space in the history
+        historyControl = [ "ignoredups" "ignorespace" ];
+
+        sessionVariables =
+          let
+            display = { DISPLAY = ":0"; };
+            ssh_auth_sock =
+              if pkgs.stdenv.isDarwin
+              then { SSH_AUTH_SOCK = homeDirectory + "/Library/Containers/com.maxgoedjen.Secretive.SecretAgent/Data/socket.ssh"; }
+              else if isWSL
+              then { SSH_AUTH_SOCK = homeDirectory + "/.1password/agent.sock"; }
+              else {};
+          in
+            display // ssh_auth_sock;
       };
-
-      # don't put duplicate lines or lines starting with space in the history
-      historyControl = [ "ignoredups" "ignorespace" ];
-
-      sessionVariables =
-        let
-          display = { DISPLAY = ":0"; };
-          ssh_auth_sock =
-            pkgs.lib.optionalAttrs
-              pkgs.stdenv.isDarwin
-              { SSH_AUTH_SOCK = homeDirectory + "/Library/Containers/com.maxgoedjen.Secretive.SecretAgent/Data/socket.ssh"; };
-        in
-          display // ssh_auth_sock;
-    };
 
     fzf = 
       let defaultCommand = ''
