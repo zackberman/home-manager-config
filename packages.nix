@@ -17,6 +17,7 @@ in
     home.packages = [
       pkgs.bat
       pkgs.bashInteractive
+      pkgs.coreutils-prefixed
       pkgs.delta
       pkgs.eza
       pkgs.fzf
