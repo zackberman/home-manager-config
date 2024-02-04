@@ -56,7 +56,7 @@
 
     fzf = 
       let defaultCommand = ''
-        rg --files --no-ignore --hidden --follow -g "!{.git,node_modules}/*" 2> /dev/null
+        ${pkgs.ripgrep}/bin/rg --files --no-ignore --hidden --follow -g "!{.git,node_modules}/*" 2> /dev/null
       '';
 
       in {
