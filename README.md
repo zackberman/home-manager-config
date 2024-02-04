@@ -18,14 +18,6 @@
 - Configuration options for every module:
   https://nix-community.github.io/home-manager/options.html
 
-### TODO
-
-- Migrate .vimrc. See documention for
-  [programs.vim.plugins](https://nix-community.github.io/home-manager/options.html#opt-programs.vim.plugins).
-  It looks like not all of my plugins are in nixpkgs. But it looks like maybe it
-  wouldn't be that hard to package them myself? See the `buildVimPluginFrom2Nix`
-  pattern in [vim/plugins/generated.nix](https://github.com/NixOS/nixpkgs/blob/nixos-23.05/pkgs/applications/editors/vim/plugins/generated.nix).
-
 ### History
 
 #### First steps on macOS
