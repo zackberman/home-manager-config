@@ -28,7 +28,6 @@ in
       pkgs.openssh
       pkgs.ripgrep
       pkgs.tig
-      pkgs.vim
       python
       nytxw-stats.default
     ];
