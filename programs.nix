@@ -136,6 +136,7 @@
           with pkgs.vimPlugins; [
             barbar-nvim
             fzf-vim
+            gruvbox
             nvim-web-devicons
             tokyonight-nvim
             vim-nix
@@ -189,10 +190,14 @@
           nnoremap <C-N> :bnext<CR>
           nnoremap <C-P> :bprev<CR>
 
-          colorscheme tokyonight-night
+          if $TERM_PROGRAM ==# "Apple_Terminal"
+            colorscheme gruvbox
+          else
+            colorscheme tokyonight-night
+          endif
 
           augroup vimrc_autocmds
-            autocmd BufEnter * highlight OverLength ctermbg=160 ctermfg=white guifg=#ffffff guibg=#db4b4b
+            autocmd BufEnter * highlight OverLength ctermbg=189 ctermfg=235 guifg=#ffffff guibg=#db4b4b
             autocmd BufEnter * match OverLength /\%>80v.\+/
           augroup END
 
