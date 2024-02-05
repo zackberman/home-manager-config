@@ -27,9 +27,6 @@
         initExtra = ''
           function ll() { eza -algF --group-directories-first "$@"; }
 
-          #source "$(fzf-share)/key-bindings.bash"
-          #source "$(fzf-share)/completion.bash"
-
         '' + (pkgs.lib.optionalString isWSL ''
           "${agent-bridge}/bin/agent-bridge"
         '');
