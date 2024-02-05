@@ -50,8 +50,16 @@
               else if isWSL
               then { SSH_AUTH_SOCK = homeDirectory + "/.1password/agent.sock"; }
               else {};
+
+            # Bash completions weren't working for individual applications in
+            # macOS, and this fixes it. Possibly this should also apply to WSL,
+            # but I wasn't running into issues.
+            xdg_data_dirs =
+              pkgs.lib.optionalAttrs pkgs.stdenv.isDarwin {
+                XDG_DATA_DIRS = homeDirectory + "/.nix-profile/share";
+              };
           in
-            display // ssh_auth_sock;
+            display // ssh_auth_sock // xdg_data_dirs;
       };
 
     fzf = 
