@@ -18,6 +18,13 @@
 - Configuration options for every module:
   https://nix-community.github.io/home-manager/options.html
 
+### TODO
+
+- Migrate git config.
+- Migrate karabiner-elements config. Ideally abandon jsonnet and generate it
+  natively in Nix. Install the configuration using
+  `xdg.configFile."karabiner/karabiner.json".txt = ...`.
+
 ### History
 
 #### First steps on macOS
