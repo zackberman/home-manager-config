@@ -8,6 +8,10 @@
 }:
 
 {
+  imports = [
+    ./alacritty.nix
+  ];
+
   programs = {
 
     bash =
