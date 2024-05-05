@@ -11,9 +11,10 @@
   "You can update all your programs by navigating to your dotfiles folder and
   running `nix flake lock`, which updates the `flake.lock` file."
 
-- `home-manager switch --flake .#<profile>` (where profile is either `macos` or
-  `wsl`): This installs files/applications/symlinks where they belong. Clone
-  this repo and run it from inside.
+- `scripts/switch <profile>` (where profile is either `macos` or `wsl`): This
+  runs `home-manager switch --flake .#<profile>`, which installs
+  files/applications/symlinks where they belong. Run this in the root directory
+  of the repository.
 
 - Configuration options for every module:
   https://nix-community.github.io/home-manager/options.html
