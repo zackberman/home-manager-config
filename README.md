@@ -17,7 +17,7 @@
   of the repository.
 
 - Configuration options for every module:
-  https://nix-community.github.io/home-manager/options.html
+  https://nix-community.github.io/home-manager/options.xhtml
 
 ### TODO
 
