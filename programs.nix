@@ -30,6 +30,7 @@
         enable = true;
         initExtra = ''
           function ll() { eza -algF --group-directories-first "$@"; }
+          function tree() { eza -T "$@"; }
 
         '' + (pkgs.lib.optionalString isWSL ''
           "${agent-bridge}/bin/agent-bridge"
