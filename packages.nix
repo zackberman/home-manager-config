@@ -25,6 +25,7 @@ in
       pkgs.git
       pkgs.htop
       pkgs.nix-tree
+      pkgs.ollama
       pkgs.openssh
       pkgs.ripgrep
       pkgs.tig
