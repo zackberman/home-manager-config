@@ -15,6 +15,7 @@ pkgs.lib.optionalAttrs (pkgs.stdenv.isDarwin) {
 
       shell = {
         program = "${pkgs.bashInteractive}/bin/bash";
+        args    = [ "-l" ];
       };
 
       cursor = {
