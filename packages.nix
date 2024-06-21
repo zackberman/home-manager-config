@@ -19,7 +19,9 @@ in
       pkgs.bat
       pkgs.bashInteractive
       pkgs.coreutils-prefixed
+      pkgs.curl
       pkgs.delta
+      pkgs.docker
       pkgs.eza
       pkgs.fzf
       pkgs.git
@@ -28,6 +30,7 @@ in
       pkgs.ollama
       pkgs.openssh
       pkgs.ripgrep
+      pkgs.screen
       pkgs.tig
       python
       nytxw-stats.default
