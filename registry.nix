@@ -8,15 +8,17 @@ args@{
   nix.registry =
     let
       lockfile = builtins.fromJSON (builtins.readFile ./flake.lock);
-      locked   = lockfile.nodes.nixpkgs.locked;
+      inputs   = [ "nixpkgs" "poetry2nix" ];
 
-    in {
-      nixpkgs = {
-        from = {
-          id   = "nixpkgs";
-          type = "indirect";
+      mkIndirectFromLockfile =
+        name: {
+          from = {
+            id   = name;
+            type = "indirect";
+          };
+          to = lockfile.nodes.${name}.locked;
         };
-        to = locked;
-      };
-    };
+
+    in
+      pkgs.lib.genAttrs inputs mkIndirectFromLockfile;
 }

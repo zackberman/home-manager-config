@@ -3,21 +3,31 @@
 
   inputs = {
     # Specify the source of Home Manager and Nixpkgs.
-    nixpkgs.url          = "github:nixos/nixpkgs/nixos-23.11";
+    nixpkgs.url          = "github:nixos/nixpkgs/nixos-24.05";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
 
     home-manager = {
-      url = "github:nix-community/home-manager/release-23.11";
+      url = "github:nix-community/home-manager/release-24.05";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    # Strictly speaking, this flake doesn't require poetry2nix. But we take it
+    # an input anyway so that we can put it in the nix registry while we build
+    # nytxw-stats. That way, when I do local development on nytxw-stats, I can
+    # take poetry2nix as an indirect input.
+    poetry2nix = {
+      url = "github:nix-community/poetry2nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
     nytxw-stats = {
       url = "git+ssh://git@github.com/zackberman/nytxw-stats";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows    = "nixpkgs";
+      inputs.poetry2nix.follows = "poetry2nix";
     };
   };
 
-  outputs = { nixpkgs, home-manager, nytxw-stats, ... }@inputs:
+  outputs = { nixpkgs, home-manager, poetry2nix, nytxw-stats, ... }@inputs:
     let
       configurationFromProfile =
         pname: profile:
