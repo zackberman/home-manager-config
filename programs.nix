@@ -148,7 +148,8 @@
             fzf-vim
             gruvbox
             nvim-web-devicons
-            tokyonight-nvim
+            #tokyonight-nvim
+            catppuccin-nvim
             vim-nix
             vim-smoothie
           ];
@@ -200,10 +201,12 @@
           nnoremap <C-N> :bnext<CR>
           nnoremap <C-P> :bprev<CR>
 
+          set background=dark
           if $TERM_PROGRAM ==# "Apple_Terminal"
             colorscheme gruvbox
           else
-            colorscheme tokyonight-night
+            set termguicolors
+            colorscheme catppuccin-mocha
           endif
 
           augroup vimrc_autocmds
