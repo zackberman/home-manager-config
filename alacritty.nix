@@ -4,6 +4,17 @@
   ...
 }:
 
+# Note to self: the Alacritty in my macOS dock is an alias to the Alacritty I've
+# installed in the nix store. Maybe I could automate this, but for now I
+# maintain this manually. This means that when I update nixpkgs and get a new
+# Alacritty, I need to do the following:
+#
+#   * Open the folder containing Alacritty.app like so:
+#       open "$(dirname $(realpath $(type -p alacritty)))"/../Applications/
+#   * Make a macOS alias to Alacritty.app in my Applications directory in Finder
+#   * Remove the existing Alacritty app from my dock
+#   * Drag and drop the macOS alias to my dock
+
 pkgs.lib.optionalAttrs (pkgs.stdenv.isDarwin) {
   programs.alacritty = {
     enable = true;
