@@ -10,7 +10,7 @@ pkgs.lib.optionalAttrs (pkgs.stdenv.isDarwin) {
 
     settings = {
       import = [
-        ./catppuccin_mocha.yaml
+        "${pkgs.alacritty-theme}/catppuccin_mocha.toml"
       ];
 
       shell = {
