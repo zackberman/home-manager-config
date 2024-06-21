@@ -21,7 +21,7 @@ pkgs.lib.optionalAttrs (pkgs.stdenv.isDarwin) {
 
     settings = {
       import = [
-        "${pkgs.alacritty-theme}/catppuccin_mocha.toml"
+        ./catppuccin_mocha.toml
       ];
 
       shell = {
