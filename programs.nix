@@ -145,11 +145,10 @@
         plugins =
           with pkgs.vimPlugins; [
             barbar-nvim
+            catppuccin-nvim
             fzf-vim
             gruvbox
             nvim-web-devicons
-            #tokyonight-nvim
-            catppuccin-nvim
             vim-nix
             vim-smoothie
           ];
