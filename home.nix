@@ -28,9 +28,6 @@
   # changes in each release.
   home.stateVersion = stateVersion;
 
-  # Let Home Manager install and manage itself.
-  programs.home-manager.enable = true;
-
   # This is to ensure programs are using ~/.config rather than
   # /Users/<username>/Library/whatever
   xdg.enable = true;
