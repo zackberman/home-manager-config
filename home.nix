@@ -10,9 +10,9 @@
 
 {
   imports = [
-    ./packages.nix
-    ./programs.nix
-    ./registry.nix
+    ./packages
+    ./programs
+    ./registry
   ];
 
   home.username      = username;
@@ -34,5 +34,4 @@
   # This is to ensure programs are using ~/.config rather than
   # /Users/<username>/Library/whatever
   xdg.enable = true;
-
 }

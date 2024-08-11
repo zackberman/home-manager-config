@@ -100,7 +100,7 @@ solutions. I gave #3 a shot first and then switched to #1:
    Then, I copied the resulting binary (which appeared within `~/go/bin`) to a
    Windows directory that was already part of my Windows path. Hacky! Finally, I
    modified the glue code it provides to fit nicely into my Home Manager bash
-   configuration (see [agent-bridge.sh](/agent-bridge.sh)).
+   configuration (see [agent-bridge.sh](/programs/bash/agent-bridge.sh)).
 2. Install 1Password through Home Manager and try to set up the ssh agent
    natively in Linux. This will probably involve me manually typing a password
    (as opposed to using biometrics) but it's reasonably clean. That being said,
