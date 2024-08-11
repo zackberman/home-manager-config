@@ -103,6 +103,9 @@
         ];
 
       extraLuaConfig = ''
+        require'barbar'.setup {
+          insert_at_end = true,
+        }
       '';
 
       extraPackages = [
