@@ -12,6 +12,7 @@
           catppuccin-nvim
           fzf-vim
           gruvbox
+          markdown-preview-nvim
           nvim-web-devicons
           vim-nix
           vim-smoothie
@@ -93,6 +94,8 @@
           \ -g "!{.git,node_modules,vendor}/*" '
 
         command! -bang -nargs=* F call fzf#vim#grep(g:rg_command .shellescape(<q-args>), 1, <bang>0)
+
+        ${builtins.readFile ./markdown-preview.vim}
       '';
 
       extraLuaPackages =
