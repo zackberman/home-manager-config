@@ -30,13 +30,12 @@
 
 #### First steps on macOS
 
-I ran the nix-darwin uninstaller. Then, I uninstalled Nix by following these
-instructions: https://nixos.org/manual/nix/stable/installation/uninstall#macos.
+I ran the nix-darwin uninstaller. Then, I uninstalled Nix by following [these
+instructions](https://nixos.org/manual/nix/stable/installation/uninstall#macos).
 The instructions specifically say you don't need to reboot to finish
 uninstallation... but I decided to do so anyway.
 
-Next, I ran the Determine Nix Installer:
-https://github.com/DeterminateSystems/nix-installer
+Next, I ran the [Determine Nix Installer](https://github.com/DeterminateSystems/nix-installer).
 
 Next, Home Manager. I followed instructions in the official manual, skipping
 section 1 ("Installing Home Manager") and opting instead to use flakes. First,
@@ -112,10 +111,10 @@ solutions. I gave #3 a shot first and then switched to #1:
    actually tried this, but I couldn't figure out how to log into 1Password in
    WSL because 1Password in WSL seemingly couldn't interact with my Yubikey.
 4. Use tpm2-pkcs11 to generate the key. [Here's](https://www.ledger.com/blog/ssh-with-tpm)
-   a guide. Meanwhile, the official (?) guide (says)[https://github.com/tpm2-software/tpm2-pkcs11/blob/master/docs/SSH.md#step-5---ensuring-the-library-is-in-a-good-path)
+   a guide. Meanwhile, the official (?) guide [says](https://github.com/tpm2-software/tpm2-pkcs11/blob/master/docs/SSH.md#step-5---ensuring-the-library-is-in-a-good-path)
    ssh only accepts pkcs11 libraries in trusted locations. It appears you can
-   (whitelist specific pkcs11 libraries using nixos modules)[https://github.com/NixOS/nixpkgs/blob/master/nixos/modules/programs/ssh.nix#L125C11-L125C11],
-   which (apparently)[https://github.com/NixOS/nixpkgs/blob/master/nixos/modules/programs/ssh.nix#L326C26-L326C26]
+   [whitelist specific pkcs11 libraries using nixos modules](https://github.com/NixOS/nixpkgs/blob/master/nixos/modules/programs/ssh.nix#L125C11-L125C11),
+   which [apparently](https://github.com/NixOS/nixpkgs/blob/master/nixos/modules/programs/ssh.nix#L326C26-L326C26)
    just tells systemd to pass an extra argument to ssh-agent when launching it.
    Seem like something I might have to configure manually outside of Nix, just
    like I did with Secretive on macOS.
