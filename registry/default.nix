@@ -7,7 +7,7 @@ args@{
 {
   nix.registry =
     let
-      lockfile = builtins.fromJSON (builtins.readFile ./flake.lock);
+      lockfile = builtins.fromJSON (builtins.readFile ../flake.lock);
       inputs   = [ "nixpkgs" "poetry2nix" ];
 
       mkIndirectFromLockfile =
