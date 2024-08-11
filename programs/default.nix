@@ -12,6 +12,7 @@
     ./alacritty
     ./bash
     ./fzf
+    ./home-manager
     ./neovim
     ./ssh
     ./starship
