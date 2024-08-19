@@ -22,6 +22,8 @@ in
       pkgs.curl
       pkgs.delta
       pkgs.docker
+      pkgs.duf
+      pkgs.dust
       pkgs.eza
       pkgs.fzf
       pkgs.git
