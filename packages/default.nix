@@ -28,6 +28,7 @@ in
       pkgs.fzf
       pkgs.git
       pkgs.htop
+      pkgs.nodejs
       pkgs.nix-tree
       pkgs.ollama
       pkgs.openssh
