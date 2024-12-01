@@ -17,5 +17,6 @@
     ./ssh
     ./starship
     ./tmux
+    ./zellij
   ];
 }
