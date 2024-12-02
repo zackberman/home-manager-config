@@ -32,6 +32,7 @@ in
       pkgs.ollama
       pkgs.openssh
       pkgs.ripgrep
+      pkgs.rustfmt
       pkgs.screen
       pkgs.tig
       python
