@@ -13,7 +13,9 @@
           fzf-vim
           gruvbox
           markdown-preview-nvim
+          nvim-lspconfig
           nvim-web-devicons
+          rust-vim
           vim-nix
           vim-smoothie
         ];
@@ -45,6 +47,7 @@
         "php"
         "py"
         "rb"
+        "rs"
         "scss"
         "styl"
         "toml"
@@ -63,6 +66,7 @@
         set autoindent expandtab tabstop=2 shiftwidth=2
         set statusline+=%F\ %c
         set backspace=indent,eol,start
+        set completeopt=menuone,noinsert
         nnoremap <C-N> :bnext<CR>
         nnoremap <C-P> :bprev<CR>
 
@@ -96,6 +100,7 @@
 
         command! -bang -nargs=* F call fzf#vim#grep(g:rg_command .shellescape(<q-args>), 1, <bang>0)
 
+        let g:rustfmt_autosave = 1
         ${builtins.readFile ./markdown-preview.vim}
       '';
 
@@ -106,6 +111,10 @@
       extraLuaConfig = ''
         require'barbar'.setup {
           insert_at_end = true,
+        }
+
+        require'lspconfig'.rust_analyzer.setup{
+          cmd = { "${pkgs.rust-analyzer}/bin/rust-analyzer" },
         }
       '';
 
