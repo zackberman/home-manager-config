@@ -63,11 +63,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1733085969,
-        "narHash": "sha256-+E6A5tut5nx7/vepc9UYYrJ5crN0ZXmE11w5l/TZss8=",
+        "lastModified": 1745983798,
+        "narHash": "sha256-nRgpS2F+k2xhl9nCucanEHrpxQ6BsjHvdCvTKrUVXy0=",
         "ref": "refs/heads/master",
-        "rev": "db1561040a783c275642bbe9935b95e6fbce368b",
-        "revCount": 73,
+        "rev": "34375a22ad05df1ca2f973b23b82e7fd9b3737f0",
+        "revCount": 74,
         "type": "git",
         "url": "ssh://git@github.com/zackberman/nytxw-stats"
       },
