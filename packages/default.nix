@@ -31,7 +31,7 @@ in
       pkgs.nodejs
       pkgs.nix-tree
       pkgs.ollama
-      pkgs.openssh
+      pkgs.openssh_gssapi
       pkgs.ripgrep
       pkgs.rustfmt
       pkgs.screen
