@@ -8,7 +8,7 @@
     let
       plugins =
         with pkgs.vimPlugins; [
-          barbar-nvim
+          bufferline-nvim
           catppuccin-nvim
           fzf-vim
           gruvbox
@@ -108,14 +108,18 @@
         luaPkgs: with luaPkgs; [
         ];
 
-      extraLuaConfig = ''
-        require'barbar'.setup {
-          insert_at_end = true,
+      initLua = ''
+        require'bufferline'.setup {
+          options = {
+            mode = 'buffers',
+            sort_by = 'insert_at_end',
+          },
         }
 
-        require'lspconfig'.rust_analyzer.setup{
+        vim.lsp.config('rust_analyzer', {
           cmd = { "${pkgs.rust-analyzer}/bin/rust-analyzer" },
-        }
+        })
+        vim.lsp.enable('rust_analyzer')
       '';
 
       extraPackages = [
@@ -127,8 +131,10 @@
       enable        = true;
       defaultEditor = true;
       vimAlias      = true;
+      withPython3   = true;
+      withRuby      = true;
       inherit extraConfig;
-      inherit extraLuaConfig;
+      inherit initLua;
       inherit extraLuaPackages;
       inherit extraPackages;
       inherit plugins;

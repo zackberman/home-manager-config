@@ -3,11 +3,11 @@
 
   inputs = {
     # Specify the source of Home Manager and Nixpkgs.
-    nixpkgs.url          = "github:nixos/nixpkgs/nixos-25.05";
+    nixpkgs.url          = "github:nixos/nixpkgs/nixos-26.05";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
 
     home-manager = {
-      url = "github:nix-community/home-manager/release-25.05";
+      url = "github:nix-community/home-manager/release-26.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -32,7 +32,7 @@
       configurationFromProfile =
         pname: profile:
           let
-            pkgs        = nixpkgs.legacyPackages.${profile.system};
+            pkgs = nixpkgs.legacyPackages.${profile.system};
             nytxw-stats = inputs.nytxw-stats.packages.${profile.system};
 
             extraSpecialArgs = {
