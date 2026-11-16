@@ -34,6 +34,5 @@
 
   programs.karabiner = pkgs.lib.mkIf pkgs.stdenv.isDarwin {
     enable = true;
-    keyboard = "keychron_v5"; # choices: "keychron_v5", "glove80"
   };
 }

@@ -23,17 +23,8 @@
 
 I used to maintain a locally modified clone of
 [karabiner-windows-mode](https://github.com/rux616/karabiner-windows-mode).
-I ported it to Nix, and now it lives here.
-
-Karabiner-Elements must be installed manually. Configuration is defined under
-`programs/karabiner`. Toggle the keyboard in `home.nix`:
-
-```nix
-programs.karabiner = pkgs.lib.mkIf pkgs.stdenv.isDarwin {
-  enable = true;
-  keyboard = "keychron_v5";
-};
-```
+I ported it to Nix, and now it lives here. Karabiner-Elements must be installed
+manually outside of Nix.
 
 `scripts/switch macos` generates the JSON required by Karabiner, installing it
 it as a writable `~/.config/karabiner/karabiner.json` rather than a symlink,

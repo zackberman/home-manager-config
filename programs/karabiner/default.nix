@@ -3,7 +3,7 @@ let
   cfg = config.programs.karabiner;
 
   generated = (pkgs.formats.json {}).generate "karabiner.json"
-    (import ./settings.nix { inherit lib; inherit (cfg) keyboard; });
+    (import ./settings.nix { inherit lib; });
 
   installer = pkgs.writeShellScript "install-karabiner-config" ''
     set -euo pipefail
@@ -26,14 +26,7 @@ let
   '';
 in
 {
-  options.programs.karabiner = {
-    enable = lib.mkEnableOption "declarative Karabiner-Elements configuration";
-    keyboard = lib.mkOption {
-      type = lib.types.enum [ "keychron_v5" "glove80" ];
-      default = "keychron_v5";
-      description = "Keyboard rules to install; only one ruleset is active at a time.";
-    };
-  };
+  options.programs.karabiner.enable = lib.mkEnableOption "declarative Karabiner-Elements configuration";
 
   config = lib.mkIf (cfg.enable && pkgs.stdenv.isDarwin) {
     # Karabiner rewrites its configuration, replacing file symlinks. Install
