@@ -31,4 +31,9 @@
   # This is to ensure programs are using ~/.config rather than
   # /Users/<username>/Library/whatever
   xdg.enable = true;
+
+  programs.karabiner = pkgs.lib.mkIf pkgs.stdenv.isDarwin {
+    enable = true;
+    keyboard = "keychron_v5"; # choices: "keychron_v5", "glove80"
+  };
 }

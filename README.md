@@ -22,9 +22,30 @@
 ### TODO
 
 - Migrate git config.
-- Migrate karabiner-elements config. Ideally abandon jsonnet and generate it
-  natively in Nix. Install the configuration using
-  `xdg.configFile."karabiner/karabiner.json".txt = ...`.
+
+### Karabiner-Elements Configuration (macOS only)
+
+I used to maintain a locally modified clone of
+[karabiner-windows-mode](https://github.com/rux616/karabiner-windows-mode).
+I ported it to Nix, and now it lives here.
+
+Karabiner-Elements must be installed manually. Configuration is defined under
+`programs/karabiner`. Toggle the keyboard in `home.nix`:
+
+```nix
+programs.karabiner = pkgs.lib.mkIf pkgs.stdenv.isDarwin {
+  enable = true;
+  keyboard = "keychron_v5";
+};
+```
+
+`scripts/switch macos` generates the JSON required by Karabiner, installing it
+it as a writable `~/.config/karabiner/karabiner.json` rather than a symlink,
+because Karabiner can replace file symlinks when saving settings. If the
+existing contents differ, they are backed up beside the file as
+`karabiner.json.backup.<unique suffix>` before replacement. Identical contents
+are left alone. As a result, GUI-driven changes are possible but overridden on
+the next Home Manager activation.
 
 ### History
 

@@ -13,6 +13,7 @@
     ./bash
     ./fzf
     ./home-manager
+    ./karabiner
     ./neovim
     ./ssh
     ./starship
