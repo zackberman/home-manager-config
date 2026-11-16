@@ -12,6 +12,7 @@
     ./alacritty
     ./bash
     ./fzf
+    ./git
     ./home-manager
     ./karabiner
     ./neovim

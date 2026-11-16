@@ -19,10 +19,6 @@
 - Configuration options for every module:
   https://nix-community.github.io/home-manager/options.xhtml
 
-### TODO
-
-- Migrate git config.
-
 ### Karabiner-Elements Configuration (macOS only)
 
 I used to maintain a locally modified clone of
