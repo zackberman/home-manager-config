@@ -43,7 +43,7 @@ instructions](https://nixos.org/manual/nix/stable/installation/uninstall#macos).
 The instructions specifically say you don't need to reboot to finish
 uninstallation... but I decided to do so anyway.
 
-Next, I ran the [Determine Nix Installer](https://github.com/DeterminateSystems/nix-installer).
+Next, I ran the [Determinate Nix Installer](https://github.com/DeterminateSystems/nix-installer).
 
 Next, Home Manager. I followed instructions in the official manual, skipping
 section 1 ("Installing Home Manager") and opting instead to use flakes. First,
