@@ -17,6 +17,8 @@ pkgs.lib.optionalAttrs (pkgs.stdenv.isDarwin) {
         ./catppuccin_mocha.toml
       ];
 
+      env.SHELL = "${pkgs.bashInteractive}/bin/bash";
+
       terminal.shell = {
         program = "${pkgs.bashInteractive}/bin/bash";
         args    = [ "-l" ];
