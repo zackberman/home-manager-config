@@ -11,6 +11,7 @@
   imports = [
     ./alacritty
     ./bash
+    ./codex
     ./fzf
     ./git
     ./home-manager
