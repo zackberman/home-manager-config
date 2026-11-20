@@ -1,20 +1,6 @@
+{ inputs, ... }:
 {
-  config,
-  pkgs,
-  nytxw-stats,
-  ...
-}:
-
-let
-  pypkgs =
-    ps: with ps; [
-      ipython
-    ];
-
-  python = pkgs.python3.withPackages pypkgs;
-
-in
-  {
+  flake.modules.homeManager.packages = { pkgs, ... }: {
     home.packages = [
       pkgs.bat
       pkgs.bashInteractive
@@ -36,7 +22,8 @@ in
       pkgs.rustfmt
       pkgs.screen
       pkgs.tig
-      python
-      nytxw-stats.default
+      (pkgs.python3.withPackages (ps: [ ps.ipython ]))
+      inputs.nytxw-stats.packages.${pkgs.stdenv.hostPlatform.system}.default
     ];
-  }
+  };
+}

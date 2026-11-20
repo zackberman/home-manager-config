@@ -1,39 +1,48 @@
-{ inputs, ... }:
+{ config, inputs, ... }:
 
 let
   inherit (inputs) home-manager nixpkgs;
+  homeModules = config.flake.modules.homeManager;
 
-  configurationFromProfile = _: profile:
+  configurationFromProfile = _: { system, homeDirectory, isWSL }:
     let
-      pkgs = nixpkgs.legacyPackages.${profile.system};
+      pkgs = nixpkgs.legacyPackages.${system};
     in
     home-manager.lib.homeManagerConfiguration {
       inherit pkgs;
-      modules = [ ../home.nix ];
-      extraSpecialArgs = {
-        inherit nixpkgs pkgs;
-        nytxw-stats = inputs.nytxw-stats.packages.${profile.system};
-        inherit (profile) system username homeDirectory stateVersion isWSL;
-      };
-    };
+      modules = [
+        {
+          imports = [
+            homeModules.packages
+            ../programs
+            homeModules.registry
+            homeModules.home
+          ];
 
-  profiles = {
+          home = {
+            username = "zberman";
+            inherit homeDirectory;
+
+            # Keep the compatibility version for this existing home.
+            stateVersion = "23.11";
+          };
+        }
+      ];
+
+      extraSpecialArgs = { inherit homeDirectory isWSL pkgs; };
+    };
+in
+{
+  flake.homeConfigurations = nixpkgs.lib.mapAttrs configurationFromProfile {
     macos = {
       system = "aarch64-darwin";
-      username = "zberman";
       homeDirectory = "/Users/zberman";
-      stateVersion = "23.11";
       isWSL = false;
     };
     wsl = {
       system = "x86_64-linux";
-      username = "zberman";
       homeDirectory = "/home/zberman";
-      stateVersion = "23.11";
       isWSL = true;
     };
   };
-in
-{
-  flake.homeConfigurations = nixpkgs.lib.mapAttrs configurationFromProfile profiles;
 }
