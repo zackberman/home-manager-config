@@ -4,15 +4,15 @@ set -euo pipefail
 
 usage()
 {
-  echo ${0} "<profile>"
+  printf 'Usage: %s --profile <profile>\n' "$0" >&2
 }
 
-if [[ $# -ne 1 ]]; then
+if [[ $# -ne 2 || $1 != --profile || -z $2 || $2 == -* ]]; then
   usage
   exit 1
 fi
 
-profile=${1}
+profile=${2}
 
 set -x
 exec home-manager switch --flake '.#'"${profile}"
