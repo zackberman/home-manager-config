@@ -19,6 +19,19 @@
 - Configuration options for every module:
   https://nix-community.github.io/home-manager/options.xhtml
 
+### Configuration layout
+
+The flake uses the [Dendritic pattern](https://github.com/mightyiam/dendritic).
+`import-tree` discovers flake-parts modules under `modules/`. Program
+features in `modules/programs/` contribute to the shared
+`flake.modules.homeManager.programs` module. The `macos` and `wsl`
+profiles both import it through `modules/profiles.nix`.
+
+To add a program to both profiles, add a file under `modules/programs/`
+that defines `flake.modules.homeManager.programs`. Keep supporting
+files beside their feature. Put Nix data helpers in an underscore-prefixed
+directory, such as Karabiner's `_data/`, so `import-tree` skips them.
+
 ### Karabiner-Elements Configuration (macOS only)
 
 I used to maintain a locally modified clone of
@@ -107,7 +120,7 @@ solutions. I gave #3 a shot first and then switched to #1:
    Then, I copied the resulting binary (which appeared within `~/go/bin`) to a
    Windows directory that was already part of my Windows path. Hacky! Finally, I
    modified the glue code it provides to fit nicely into my Home Manager bash
-   configuration (see [agent-bridge.sh](/programs/bash/agent-bridge.sh)).
+   configuration (see [agent-bridge.sh](modules/programs/bash/agent-bridge.sh)).
 2. Install 1Password through Home Manager and try to set up the ssh agent
    natively in Linux. This will probably involve me manually typing a password
    (as opposed to using biometrics) but it's reasonably clean. That being said,

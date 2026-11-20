@@ -4,20 +4,20 @@ let
   inherit (inputs) home-manager nixpkgs;
   homeModules = config.flake.modules.homeManager;
 
-  configurationFromProfile = _: { system, homeDirectory, isWSL }:
-    let
-      pkgs = nixpkgs.legacyPackages.${system};
-    in
+  configurationFromProfile = _: { system, homeDirectory, isWSL, enableKarabiner }:
     home-manager.lib.homeManagerConfiguration {
-      inherit pkgs;
+      pkgs = nixpkgs.legacyPackages.${system};
       modules = [
         {
           imports = [
             homeModules.packages
-            ../programs
+            homeModules.programs
             homeModules.registry
             homeModules.home
           ];
+
+          _module.args = { inherit isWSL; };
+          programs.karabiner.enable = enableKarabiner;
 
           home = {
             username = "zberman";
@@ -28,8 +28,6 @@ let
           };
         }
       ];
-
-      extraSpecialArgs = { inherit homeDirectory isWSL pkgs; };
     };
 in
 {
@@ -38,11 +36,13 @@ in
       system = "aarch64-darwin";
       homeDirectory = "/Users/zberman";
       isWSL = false;
+      enableKarabiner = true;
     };
     wsl = {
       system = "x86_64-linux";
       homeDirectory = "/home/zberman";
       isWSL = true;
+      enableKarabiner = false;
     };
   };
 }

@@ -1,8 +1,6 @@
 {
-  flake.modules.homeManager.home = { lib, pkgs, ... }: {
+  flake.modules.homeManager.home = {
     # Keep program configuration under ~/.config on macOS too.
     xdg.enable = true;
-
-    programs.karabiner.enable = lib.mkIf pkgs.stdenv.isDarwin true;
   };
 }
