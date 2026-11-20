@@ -29,15 +29,18 @@ let
         }
       ];
     };
+
+  macos = {
+    system = "aarch64-darwin";
+    homeDirectory = "/Users/zberman";
+    isWSL = false;
+    enableKarabiner = true;
+  };
 in
 {
   flake.homeConfigurations = nixpkgs.lib.mapAttrs configurationFromProfile {
-    macos = {
-      system = "aarch64-darwin";
-      homeDirectory = "/Users/zberman";
-      isWSL = false;
-      enableKarabiner = true;
-    };
+    studio = macos;
+    air = macos;
     wsl = {
       system = "x86_64-linux";
       homeDirectory = "/home/zberman";

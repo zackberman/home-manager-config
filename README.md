@@ -11,7 +11,7 @@
   "You can update all your programs by navigating to your dotfiles folder and
   running `nix flake lock`, which updates the `flake.lock` file."
 
-- `scripts/switch <profile>` (where profile is either `macos` or `wsl`): This
+- `scripts/switch <profile>` (where profile is `studio`, `air`, or `wsl`): This
   runs `home-manager switch --flake .#<profile>`, which installs
   files/applications/symlinks where they belong. Run this in the root directory
   of the repository.
@@ -24,10 +24,10 @@
 The flake uses the [Dendritic pattern](https://github.com/mightyiam/dendritic).
 `import-tree` discovers flake-parts modules under `modules/`. Program
 features in `modules/programs/` contribute to the shared
-`flake.modules.homeManager.programs` module. The `macos` and `wsl`
-profiles both import it through `modules/profiles.nix`.
+`flake.modules.homeManager.programs` module. The `studio`, `air`,
+and `wsl` profiles import it through `modules/profiles.nix`.
 
-To add a program to both profiles, add a file under `modules/programs/`
+To add a program to all profiles, add a file under `modules/programs/`
 that defines `flake.modules.homeManager.programs`. Keep supporting
 files beside their feature. Put Nix data helpers in an underscore-prefixed
 directory, such as Karabiner's `_data/`, so `import-tree` skips them.
@@ -39,8 +39,9 @@ I used to maintain a locally modified clone of
 I ported it to Nix, and now it lives here. Karabiner-Elements must be installed
 manually outside of Nix.
 
-`scripts/switch macos` generates the JSON required by Karabiner, installing it
-it as a writable `~/.config/karabiner/karabiner.json` rather than a symlink,
+Running `scripts/switch studio` or `scripts/switch air` generates the JSON
+required by Karabiner and installs a writable copy at
+`~/.config/karabiner/karabiner.json`,
 because Karabiner can replace file symlinks when saving settings. If the
 existing contents differ, they are backed up beside the file as
 `karabiner.json.backup.<unique suffix>` before replacement. Identical contents
@@ -90,7 +91,7 @@ this like so:
 
 Then I replicated some of what I observed in
 [this dotfiles repo](https://github.com/ereslibre/dotfiles/) to support multiple
-configuration profiles ("macos" and "wsl").
+configuration profiles (originally "macos" and "wsl").
 
 #### Configuring ssh and github so I can use private flake inputs
 
