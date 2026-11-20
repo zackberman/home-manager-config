@@ -11,10 +11,8 @@
   "You can update all your programs by navigating to your dotfiles folder and
   running `nix flake lock`, which updates the `flake.lock` file."
 
-- `scripts/switch --profile <profile>` (where profile is `studio`, `air`, or
-  `wsl`): This runs `home-manager switch --flake .#<profile>`, which installs
-  files/applications/symlinks where they belong. Run this in the root directory
-  of the repository.
+- `scripts/switch` runs `home-manager switch --flake .#<profile>`. Run it from
+  the repository root.
 
 - Configuration options for every module:
   https://nix-community.github.io/home-manager/options.xhtml
@@ -39,14 +37,12 @@ I used to maintain a locally modified clone of
 I ported it to Nix, and now it lives here. Karabiner-Elements must be installed
 manually outside of Nix.
 
-Running `scripts/switch --profile studio` or `scripts/switch --profile air`
-generates the JSON required by Karabiner and installs a writable copy at
-`~/.config/karabiner/karabiner.json`,
-because Karabiner can replace file symlinks when saving settings. If the
-existing contents differ, they are backed up beside the file as
-`karabiner.json.backup.<unique suffix>` before replacement. Identical contents
-are left alone. As a result, GUI-driven changes are possible but overridden on
-the next Home Manager activation.
+Running `scripts/switch` generates the JSON required by Karabiner and installs a
+writable copy at `~/.config/karabiner/karabiner.json`, because Karabiner can
+replace file symlinks when saving settings. If the existing contents differ,
+they are backed up beside the file as `karabiner.json.backup.<unique suffix>`
+before replacement. Identical contents are left alone. As a result, GUI-driven
+changes are possible but overridden on the next Home Manager activation.
 
 ### History
 

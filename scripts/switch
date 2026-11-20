@@ -4,15 +4,30 @@ set -euo pipefail
 
 usage()
 {
-  printf 'Usage: %s --profile <profile>\n' "$0" >&2
+  printf 'Usage: %s [--profile <profile>]\n' "$0" >&2
 }
 
-if [[ $# -ne 2 || $1 != --profile || -z $2 || $2 == -* ]]; then
+if [[ $# -eq 0 ]]; then
+  if ! host=$(hostname); then
+    printf 'Could not read the hostname. Specify a profile with --profile.\n' >&2
+    exit 1
+  fi
+
+  case "$host" in
+    *-xps*)         profile=wsl ;;
+    *-Mac-Studio*)  profile=studio ;;
+    *-MacBook-Air*) profile=air ;;
+    *)
+      printf 'Could not infer a profile from hostname "%s". Specify a profile with --profile.\n' "$host" >&2
+      exit 1
+      ;;
+  esac
+elif [[ $# -ne 2 || $1 != --profile || -z $2 || $2 == -* ]]; then
   usage
   exit 1
+else
+  profile=${2}
 fi
-
-profile=${2}
 
 set -x
 exec home-manager switch --flake '.#'"${profile}"
