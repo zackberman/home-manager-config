@@ -4,7 +4,10 @@
     cfg = config.programs.karabiner;
 
     generated = (pkgs.formats.json {}).generate "karabiner.json"
-      (import ./_data/settings.nix { inherit lib; });
+      (import ./_data/settings.nix {
+        inherit lib;
+        inherit (cfg) remapFunctionRow;
+      });
 
     installer = pkgs.writeShellScript "install-karabiner-config" ''
       set -euo pipefail
@@ -27,7 +30,14 @@
     '';
   in
   {
-    options.programs.karabiner.enable = lib.mkEnableOption "declarative Karabiner-Elements configuration";
+    options.programs.karabiner = {
+      enable = lib.mkEnableOption "declarative Karabiner-Elements configuration";
+      remapFunctionRow = lib.mkOption {
+        type = lib.types.bool;
+        default = true;
+        description = "Remap F1 to Spotlight and F2 to the screenshot shortcut.";
+      };
+    };
 
     config = lib.mkIf (cfg.enable && pkgs.stdenv.isDarwin) {
       # Karabiner rewrites its configuration, replacing file symlinks. Install

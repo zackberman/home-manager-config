@@ -1,4 +1,4 @@
-{ lib }:
+{ lib, remapFunctionRow }:
 let
   bundle = import ./bundles.nix;
   condition = type: bundles: {
@@ -41,8 +41,12 @@ in
     (remap "Ctrl+PageUp [+Terminal Emulators]" "page_up" [ "control" ] "1" [ "option" ] ifTerm)
     (remap "Ctrl+PageDown [+Terminal Emulators]" "page_down" [ "control" ] "2" [ "option" ] ifTerm)
     (remap "Delete [+Finder]" "delete_forward" null "delete_or_backspace" [ "command" ] (condition "if" bundle.finder))
+  ]
+  ++ lib.optionals remapFunctionRow [
     (remap "Spotlight" "f1" null "spacebar" [ "command" ] null)
     (remap "Screenshot" "f2" null "5" [ "command" "shift" ] null)
+  ]
+  ++ [
     (remap "Insert (Ctrl)" "delete_forward" [ "control" ] "insert" [ "control" ] null)
     (remap "Insert (Shift)" "delete_forward" [ "shift" ] "insert" [ "shift" ] null)
   ]

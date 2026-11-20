@@ -4,7 +4,13 @@ let
   inherit (inputs) home-manager nixpkgs;
   homeModules = config.flake.modules.homeManager;
 
-  configurationFromProfile = _: { system, homeDirectory, isWSL, enableKarabiner }:
+  configurationFromProfile = _: {
+    system,
+    homeDirectory,
+    isWSL,
+    enableKarabiner,
+    remapFunctionRow ? true,
+  }:
     home-manager.lib.homeManagerConfiguration {
       pkgs = nixpkgs.legacyPackages.${system};
       modules = [
@@ -17,7 +23,10 @@ let
           ];
 
           _module.args = { inherit isWSL; };
-          programs.karabiner.enable = enableKarabiner;
+          programs.karabiner = {
+            enable = enableKarabiner;
+            inherit remapFunctionRow;
+          };
 
           home = {
             username = "zberman";
@@ -40,7 +49,7 @@ in
 {
   flake.homeConfigurations = nixpkgs.lib.mapAttrs configurationFromProfile {
     studio = macos;
-    air = macos;
+    air = macos // { remapFunctionRow = false; };
     wsl = {
       system = "x86_64-linux";
       homeDirectory = "/home/zberman";

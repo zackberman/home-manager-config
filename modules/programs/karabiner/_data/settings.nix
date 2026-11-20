@@ -1,4 +1,4 @@
-{ lib }:
+{ lib, remapFunctionRow }:
 let
   device = { description, vendor_id, product_id, settings }: {
     identifiers = { inherit vendor_id product_id; is_keyboard = true; };
@@ -14,7 +14,7 @@ in
     name = "Default profile";
     selected = true;
 
-    complex_modifications.rules = import ./rules.nix { inherit lib; };
+    complex_modifications.rules = import ./rules.nix { inherit lib remapFunctionRow; };
 
     # IDs identify models, not individual units
     devices = map device [
