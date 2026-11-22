@@ -11,10 +11,54 @@
       let
         inherit (config.home) homeDirectory;
 
+        # Windows rejected Nixpkgs' MinGW niperelay package with error 193, and
+        # removing MinGW's strip step (`dontStrip = true`) fixes the failure. We
+        # could simply override `dontStrip` instead of defining a custom
+        # derivation, but:
+        #
+        #   - npiperelay is pure Go, so we can target Windows with the Linux Go
+        #     compiler and cgo disabled, avoiding cross GCC, binutils, and
+        #     Windows runtime libraries.
+        #   - With Nixpkgs 26.05 on WSL, our native Go build requires 59 MiB
+        #     from the binary cache (217 MiB unpacked) vs. 226 MiB (887 MiB
+        #     unpacked) for the MinGW build.
+        npiperelay = pkgs.stdenvNoCC.mkDerivation {
+          inherit (pkgs.pkgsCross.mingwW64.windows.npiperelay)
+            pname
+            version
+            src;
+
+          nativeBuildInputs = [ pkgs.go ];
+          dontStrip = true;
+
+          env = {
+            GOOS = "windows";
+            inherit (pkgs.go) GOARCH;
+            CGO_ENABLED = "0";
+            GOTOOLCHAIN = "local";
+          };
+
+          buildPhase = ''
+            runHook preBuild
+            export GOCACHE="$TMPDIR/go-cache"
+            go build -mod=vendor -trimpath -o npiperelay.exe .
+            runHook postBuild
+          '';
+
+          installPhase = ''
+            runHook preInstall
+            install -Dm755 npiperelay.exe "$out/bin/npiperelay.exe"
+            runHook postInstall
+          '';
+        };
+
         agent-bridge =
           pkgs.writeShellApplication {
-            name          = "agent-bridge";
-            text          = builtins.readFile ./agent-bridge.sh;
+            name = "agent-bridge";
+            text = builtins.readFile ./agent-bridge.sh;
+
+            runtimeEnv.NPIPERELAY = "${npiperelay}/bin/npiperelay.exe";
+
             runtimeInputs = [
               pkgs.socat
               pkgs.toybox # for pgrep and setsid
