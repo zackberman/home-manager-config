@@ -61,7 +61,8 @@
 
             runtimeInputs = [
               pkgs.socat
-              pkgs.toybox # for pgrep and setsid
+              pkgs.iproute2 # for ss
+              pkgs.util-linux # for flock and setsid
             ];
           };
 

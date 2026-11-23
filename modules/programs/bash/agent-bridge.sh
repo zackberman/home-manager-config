@@ -7,22 +7,22 @@
 #   * Moving `export SSH_AUTH_SOCK...` into programs.nix. As a result, this file
 #     can be executed directly as a bash script rather than sourced.
 #
-#   * Replacing "ps -auxww | grep..." with "pgrep -f..." (as suggested
-#     by shellcheck)
+#   * Replacing the original `ps -auxww | grep` process check with a `flock`
+#     held by the listener so concurrent shells start only one bridge. If a
+#     socket already exists, `ss` checks for a listener before the script
+#     removes it.
 #
 #   * Removed echo calls for quieter shell startup
 
 # Code extracted from https://stuartleeks.com/posts/wsl-ssh-key-forward-to-windows/ with minor modifications
 
-# Configure ssh forwarding
-# use square brackets to generate a regex match for the process we want but that doesn't match the grep command running it!
-ALREADY_RUNNING=$(pgrep -f "[n]piperelay.exe -ei -s //./pipe/openssh-ssh-agent" >/dev/null; echo $?)
-if [[ $ALREADY_RUNNING != "0" ]]; then
-    if [[ -S $SSH_AUTH_SOCK ]]; then
-        # not expecting the socket to exist as the forwarding command isn't running (http://www.tldp.org/LDP/abs/html/fto.html)
-        rm "$SSH_AUTH_SOCK"
-    fi
-    # setsid to force new session to keep running
-    # set socat to listen on $SSH_AUTH_SOCK and forward to npiperelay which then forwards to openssh-ssh-agent on windows
-    (setsid socat UNIX-LISTEN:"$SSH_AUTH_SOCK",fork EXEC:"$NPIPERELAY -ei -s //./pipe/openssh-ssh-agent",nofork &) >/dev/null 2>&1
+exec 9>"$SSH_AUTH_SOCK.lock"
+flock -n 9 || exit 0
+
+if [[ -S $SSH_AUTH_SOCK ]]; then
+    listener=$(ss -Hxl "src = $SSH_AUTH_SOCK")
+    [[ -z $listener ]] || exit 0
+    rm -f -- "$SSH_AUTH_SOCK"
 fi
+
+setsid socat UNIX-LISTEN:"$SSH_AUTH_SOCK",fork EXEC:"$NPIPERELAY -ei -s //./pipe/openssh-ssh-agent",nofork </dev/null >/dev/null 2>&1 &
